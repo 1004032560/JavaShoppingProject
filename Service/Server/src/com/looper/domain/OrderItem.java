@@ -76,6 +76,8 @@ public class OrderItem implements Serializable {
         this.employee = employee;
     }
 
+
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -143,16 +145,14 @@ public class OrderItem implements Serializable {
     @Override
     public String toString() {
         return "订单详细信息{" +
-                " ID:" + orderItemId +
-                ", 商品ID:" + good.getGoodId() +
+                " 总订单ID:" + orderInfoId.getOrderInfoId() +
+                ", 分订单ID:" + orderItemId +
                 ", 商品名称:" + good.getGoodName() +
+                ", 顾客ID:" + customer.getCustomerId() +
+                ", 顾客姓名:" + customer.getCustomerName() +
                 ", 购买数量:" + orderItemNum +
                 ", 总金额:" + orderItemPrice +
-                ", 总订单ID" + orderInfoId +
-                ", 顾客ID" + customer.getCustomerId() +
-                ", 顾客姓名" + customer.getCustomerName() +
-                ", employee=" + employee +
-                ", timestamp=" + timestamp +
+                ", 购买日期:" + timestamp +
                 " }";
     }
 }

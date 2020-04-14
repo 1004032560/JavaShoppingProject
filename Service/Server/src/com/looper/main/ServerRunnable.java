@@ -19,6 +19,9 @@ public class ServerRunnable implements Runnable {
     @Override
     public void run() {
 
+        System.out.println();
+        System.out.println("与"+Thread.currentThread().getName()+"开始通讯");
+
         while (true){
 
             try {
@@ -464,6 +467,9 @@ public class ServerRunnable implements Runnable {
 
                     Data dataSend = new Data("Over");
                     oos.writeObject(dataSend);
+
+                    System.out.println();
+                    System.out.println("与"+Thread.currentThread().getName()+"结束通讯");
 
                     oos.close();
                     os.close();

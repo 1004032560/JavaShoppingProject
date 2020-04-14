@@ -49,16 +49,22 @@ public class OrderItemDaoImpl implements OrderItemDao {
             ResultSet rs = JDBCUtil.ps.executeQuery();
             while(rs.next()){
                 int orderItemId = rs.getInt("orderItemId");
+
                 int goodId = rs.getInt("goodId");
                 Good good = new GoodDaoImpl().findGood(goodId);
+
                 int orderItemNum = rs.getInt("orderItemNum");
                 double orderItemPrice = rs.getDouble("orderItemPrice");
+
                 int customerId = rs.getInt("customerId");
                 Customer customer1 = new CustomerDaoImpl().findCustomer(customerId);
+
                 Timestamp dateTime = rs.getTimestamp("orderTime");
+
                 int orderInfoId = rs.getInt("orderInfoId");
                 OrderInfo orderInfo = new OrderInfoDaoImpl().findOrderInfo(orderInfoId);
-                orderItem = new OrderItem(orderInfoId,good,orderItemNum,orderItemPrice,orderInfo,customer1,dateTime);
+
+                orderItem = new OrderItem(orderItemId,good,orderItemNum,orderItemPrice,orderInfo,customer1,dateTime);
                 orderItems.add(orderItem);
             }
         } catch (SQLException e) {

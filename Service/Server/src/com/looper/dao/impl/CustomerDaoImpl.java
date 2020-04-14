@@ -163,8 +163,8 @@ public class CustomerDaoImpl implements CustomerDao {
             JDBCUtil.ps.setString(1,newName);
             JDBCUtil.ps.setInt(2,newAge);
             JDBCUtil.ps.setString(3,newSex);
-            JDBCUtil.ps.setInt(4,customerId);
-            JDBCUtil.ps.setString(5,newPassword);
+            JDBCUtil.ps.setString(4,newPassword);
+            JDBCUtil.ps.setInt(5,customerId);
             JDBCUtil.ps.executeUpdate();
             flag = true;
         } catch (SQLException e) {

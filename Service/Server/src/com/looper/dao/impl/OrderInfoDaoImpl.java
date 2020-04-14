@@ -4,7 +4,6 @@ import com.looper.dao.CustomerDao;
 import com.looper.dao.EmployeeDao;
 import com.looper.dao.OrderInfoDao;
 import com.looper.domain.Customer;
-import com.looper.domain.Data;
 import com.looper.domain.Employee;
 import com.looper.domain.OrderInfo;
 import com.looper.util.JDBCUtil;
@@ -133,7 +132,7 @@ public class OrderInfoDaoImpl implements OrderInfoDao {
     @Override
     public OrderInfo findOrderInfo(int orderInfoId) {
         JDBCUtil.getConn();
-        String sql = "select * from orderinfo where customerId=?";
+        String sql = "select * from orderinfo where orderInfoId=?";
         OrderInfo orderInfo = null;
         try {
             JDBCUtil.ps = JDBCUtil.conn.prepareStatement(sql);

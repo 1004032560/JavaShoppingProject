@@ -18,7 +18,8 @@ public class ClientMain {
 
         loop:
         while (true) {
-            System.out.println("*****************************************************************");
+            System.out.println("******************************欢迎光临*******************************");
+            System.out.println();
             System.out.println("                            1. 顾客登录");
             System.out.println("                            2. 顾客注册");
             System.out.println("                            3. 员工登录");
@@ -156,8 +157,8 @@ public class ClientMain {
                                                     Employee employee1 = (Employee) dataRecv.getObject();
                                                     employees.add(employee1);
                                                     System.out.println(employee1.getEmployeeId()+"\t\t"+employee1.getEmployeeName()+"\t\t\t"+employee1.getShop().getShopName());
-                                                    System.out.println("================================================================================");
                                                 }
+                                                System.out.println("=================================================");
 
                                                 while (true) {
                                                     //选择收银员
@@ -321,18 +322,26 @@ public class ClientMain {
                         }
 
                         else if ("2".equals(sel1)) {
+                            dataSend = new Data("查询顾客", new Customer(customer.getCustomerId()));
+                            os = socket.getOutputStream();
+                            oos = new ObjectOutputStream(os);
+                            oos.writeObject(dataSend);
+
+                            is = socket.getInputStream();
+                            ois = new ObjectInputStream(is);
+                            dataRecv = (Data) ois.readObject();
+                            customer = (Customer) dataRecv.getObject();
                             System.out.println(customer);
-                            System.out.println();
                         }
 
                         else if ("3".equals(sel1)) {
-                            System.out.println("请输入新名称:");
+                            System.out.print("请输入新名称:");
                             String newName = scanner.next();
-                            System.out.println("请输入新密码:");
+                            System.out.print("请输入新密码:");
                             String newPassword = scanner.next();
-                            System.out.println("请输入新年龄:");
+                            System.out.print("请输入新年龄:");
                             int newAge = scanner.nextInt();
-                            System.out.println("请输入新性别:");
+                            System.out.print("请输入新性别:");
                             String newSex = scanner.next();
                             dataSend = new Data("修改顾客全部信息", new Customer(customer.getCustomerId(), newName, newAge, newSex, newPassword));
                             os = socket.getOutputStream();
@@ -530,7 +539,6 @@ public class ClientMain {
                                     System.out.println("                            7. 查看所有顾客总消费情况和所有员工总销售情况");
                                     System.out.println("                            8. 通过顾客ID查看顾客总消费情况");
                                     System.out.println("                            9. 通过员工ID查看员工总销售情况");
-                                    System.out.println("                           10. 通过员工ID查看顾客详细购买记录");
                                     System.out.println("                            0. 返回上一级");
                                     System.out.println("-----------------------------------------------------------------");
                                     System.out.print("请输入选择:");
@@ -742,40 +750,6 @@ public class ClientMain {
                                         }
                                         System.out.println();
                                     }
-                                    else if ("10".equals(sel2)) {
-                                        System.out.print("请输入顾客ID:");
-                                        int customerId = scanner.nextInt();
-                                        dataSend = new Data("查询顾客", new Customer(customerId));
-                                        os = socket.getOutputStream();
-                                        oos = new ObjectOutputStream(os);
-                                        oos.writeObject(dataSend);
-
-                                        is = socket.getInputStream();
-                                        ois = new ObjectInputStream(is);
-                                        dataRecv = (Data) ois.readObject();
-                                        Customer customer = (Customer) dataRecv.getObject();
-                                        System.out.println(customer);
-                                        if (customer != null) {
-                                            dataSend = new Data("查询该顾客所有详细订单", customer);
-                                            os = socket.getOutputStream();
-                                            oos = new ObjectOutputStream(os);
-                                            oos.writeObject(dataSend);
-                                            is = socket.getInputStream();
-                                            ois = new ObjectInputStream(is);
-                                            dataRecv = (Data) ois.readObject();
-                                            System.out.println(dataRecv.getMsg());
-                                            System.out.println(dataRecv.getObject());
-
-                                            for (int i = 0; i < dataRecv.getNum() - 1; i++) {
-                                                dataRecv = (Data) ois.readObject();
-                                                OrderItem orderItem = (OrderItem) dataRecv.getObject();
-                                                System.out.println(orderItem);
-                                            }
-                                        } else {
-                                            System.out.println("该顾客不存在!");
-                                        }
-                                        System.out.println();
-                                    }
                                     else if ("0".equals(sel2)) {
                                         System.out.println("返回成功");
                                         System.out.println();
@@ -811,7 +785,6 @@ public class ClientMain {
                                         Good good = (Good) dataRecv.getObject();
                                         if (good != null) {
                                             while (true) {
-                                                System.out.println(good);
                                                 System.out.println("**************************欢迎\"" + employee.getEmployeeName() + "\"管理员修改信息***************************");
                                                 System.out.println("                            1. 修改商品名称");
                                                 System.out.println("                            2. 修改商品价格");
@@ -858,7 +831,7 @@ public class ClientMain {
                                                     dataRecv = (Data) ois.readObject();
                                                     System.out.println(dataRecv.getMsg());
                                                     System.out.println();
-                                                } else if ("0".equals(sel2)) {
+                                                } else if ("0".equals(sel3)) {
                                                     System.out.println("成功返回上一级！");
                                                     System.out.println();
                                                     break;
@@ -871,7 +844,8 @@ public class ClientMain {
                                             System.out.println("该商品不存在!");
                                             System.out.println();
                                         }
-                                    } else if ("2".equals(sel2)) {
+                                    }
+                                    else if ("2".equals(sel2)) {
                                         System.out.print("请输入员工ID:");
                                         int employeeId = scanner.nextInt();
                                         dataSend = new Data("查询员工", new Employee(employeeId));
@@ -905,7 +879,8 @@ public class ClientMain {
                                             System.out.println("该员工不存在!");
                                         }
                                         System.out.println();
-                                    } else if ("3".equals(sel2)) {
+                                    }
+                                    else if ("3".equals(sel2)) {
                                         System.out.print("请输入顾客ID:");
                                         int customerId = scanner.nextInt();
                                         dataSend = new Data("查询顾客", new Customer(customerId));
@@ -938,7 +913,8 @@ public class ClientMain {
                                             System.out.println("该顾客不存在!");
                                         }
                                         System.out.println();
-                                    } else if ("0".equals(sel2)) {
+                                    }
+                                    else if ("0".equals(sel2)) {
                                         System.out.println("成功返回上一级！");
                                         System.out.println();
                                         break;
